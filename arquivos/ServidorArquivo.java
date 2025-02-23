@@ -5,9 +5,11 @@ import java.net.*;
 
 public class ServidorArquivo {
     public static void main(String[] args) {
-        int porta = 12345;
+        //cria a porta para o cliente ouvir e o arquivo que vai ser salvo
+        int porta = 151515;
         String destinoArquivo = "recebido.txt";
 
+        //cria o socket e o inputstream para receber o arquivo
         try (ServerSocket serverSocket = new ServerSocket(porta)) {
             System.out.println("Servidor esperando conexão...");
 
@@ -17,7 +19,6 @@ public class ServidorArquivo {
             try (InputStream in = socket.getInputStream();
                  FileOutputStream fileOut = new FileOutputStream(destinoArquivo);
                  BufferedOutputStream bufferedOut = new BufferedOutputStream(fileOut)) {
-
                 byte[] buffer = new byte[4096];
                 int bytesLidos;
 
@@ -25,10 +26,10 @@ public class ServidorArquivo {
                     bufferedOut.write(buffer, 0, bytesLidos);
                 }
 
-                bufferedOut.flush(); // Garante que todos os dados são escritos
+                bufferedOut.flush();
             }
 
-            System.out.println("Arquivo recebido e salvo como: " + destinoArquivo);
+            System.out.println("Arquivo recebido e salvo em: " + destinoArquivo);
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
