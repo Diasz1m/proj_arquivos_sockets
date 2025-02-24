@@ -27,6 +27,18 @@ public class ServidorArquivo {
                 }
 
                 bufferedOut.flush();
+
+                System.out.println("Arquivo recebido e salvo em: " + destinoArquivo);
+
+                OutputStream out = socket.getOutputStream();
+                PrintWriter writer = new PrintWriter(out, true);
+                writer.println("Arquivo recebido com sucesso!");
+
+                // Fecha conexoes e socket
+                bufferedOut.close();
+                in.close();
+                writer.close();
+                socket.close();
             }
 
             System.out.println("Arquivo recebido e salvo em: " + destinoArquivo);

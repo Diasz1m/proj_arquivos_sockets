@@ -27,12 +27,25 @@ public class ClienteArquivo {
             // cria e le o arquivo
             byte[] buffer = new byte[4096];
             int bytesLidos;
-
+            int totalBytesLidos = 0;
             while ((bytesLidos = bufferedIn.read(buffer)) != -1) {
                 out.write(buffer, 0, bytesLidos);
+                totalBytesLidos += bytesLidos;
             }
 
             out.flush();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String resp = reader.readLine();
+            if(resp.equals("Arquivo recebido com sucesso!"))
+            {
+                System.out.println("Arquivo enviado com sucesso!");
+            }
+            else
+            {
+                System.out.println("Erro ao enviar arquivo!");
+            }
+
             System.out.println("Arquivo enviado com sucesso!");
         } catch (IOException e) {
             e.printStackTrace();
